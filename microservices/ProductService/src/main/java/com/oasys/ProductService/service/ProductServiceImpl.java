@@ -1,11 +1,14 @@
 package com.oasys.ProductService.service;
 
 import com.oasys.ProductService.entity.Product;
+
+import com.oasys.ProductService.exceptionHandler.ProductServiceCustomException;
 import com.oasys.ProductService.model.ProductRequest;
 import com.oasys.ProductService.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
     public Product getProduct(Long productId) {
         log.info("Fetching product with ID: {}", productId);
         return productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found with ID: " + productId));
-    }
+                .orElseThrow(() ->
+                        new ProductServiceCustomException
+                                ("Product not found with ID: " + productId,
+                                        HttpStatus.NOT_FOUND.toString()));    }
 }
