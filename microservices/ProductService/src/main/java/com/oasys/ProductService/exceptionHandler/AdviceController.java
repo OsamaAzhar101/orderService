@@ -44,7 +44,7 @@ public class AdviceController {
     }
 
     @ExceptionHandler(ProductServiceCustomException.class)
-    public ResponseEntity<ErrorResponse> handleProductNotFoundException(ResourceNotFoundException ex) {
+    public ResponseEntity<ErrorResponse> handleProductNotFoundException(ProductServiceCustomException ex) {
         return new ResponseEntity<>
                 (ErrorResponse.builder()
                         .errorCode(ex.getErrorCode())
