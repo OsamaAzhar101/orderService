@@ -1,5 +1,6 @@
 package com.oasys.OrderService.entity;
 
+import com.oasys.OrderService.model.PaymentMode;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,8 +21,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long orderId;
     private String orderStatus;
-    private String productId;
+    private long productId;
     private int quantity;
+
+    private PaymentMode paymentMode;
 
     private long amount;
 
@@ -45,7 +48,7 @@ public class Order {
         return orderStatus;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
@@ -85,4 +88,12 @@ public class Order {
         this.amount = amount;
     }
 
+
+    public PaymentMode getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(PaymentMode paymentMode) {
+        this.paymentMode = paymentMode;
+    }
 }
