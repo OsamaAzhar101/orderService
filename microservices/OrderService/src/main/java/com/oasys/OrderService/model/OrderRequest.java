@@ -13,9 +13,9 @@ public class OrderRequest {
 
     private long productId;
     private int quantity;
-    private double price;
+    private long price;
 
-//    private PaymentMode paymentMode;
+    private PaymentMode paymentMode;
 
 
 }
