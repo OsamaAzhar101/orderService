@@ -1,12 +1,16 @@
 package com.oasys.OrderService.service;
 
 import com.oasys.OrderService.entity.Order;
+import com.oasys.OrderService.exception.CustomException;
 import com.oasys.OrderService.external.client.PaymentService;
 import com.oasys.OrderService.external.client.model.PaymentRequest;
+import com.oasys.OrderService.external.client.model.ProductResponse;
 import com.oasys.OrderService.model.OrderRequest;
+import com.oasys.OrderService.model.OrderResponse;
 import com.oasys.OrderService.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.oasys.OrderService.external.client.ProductService;
 
@@ -60,8 +64,7 @@ public class OrderServiceImpl implements OrderService {
             paymentService.processPayment(paymentRequest);
             log.info("Payment processed successfully for Order ID: {}", order1.getOrderId());
             order1.setOrderStatus("ORDER_PLACED");
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Payment processing failed for Order ID: {}", order1.getOrderId(), e);
             order1.setOrderStatus("PAYMENT_FAILED");
             orderRepository.save(order1);
@@ -71,8 +74,38 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Long orderId) {
-        return orderRepository.findById(orderId).orElse(null);
+    public OrderResponse getOrderById(Long orderId) {
+
+        log.info("Fetching order with ID: {}", orderId);
+
+        Order order =
+                orderRepository.findById(orderId).orElseThrow(
+                        () -> CustomException.builder()
+                                .errorMessage("Order not found with ID: " + orderId)
+                                .errorCode("ORDER_NOT_FOUND")
+                                .build()
+                );
+
+        log.info("Order fetched successfully: {}", order);
+
+
+        ResponseEntity<ProductResponse> productResponse =
+                productService.getProductById(order.getProductId());
+
+        if (!productResponse.getStatusCode().is2xxSuccessful()) {
+            log.error("Failed to fetch product details for Order ID: {}", orderId);
+            throw new CustomException("Failed to fetch product details",
+                    "PRODUCT_NOT_FOUND", productResponse.getStatusCode().value());
+        }
+
+        return OrderResponse.builder()
+                .orderStatus(order.getOrderStatus())
+                .orderDate(order.getOrderDate())
+                .amount(order.getAmount())
+                .orderId(order.getOrderId())
+                .productDetails(productResponse.getBody())
+                .build();
+
     }
 
     @Override
