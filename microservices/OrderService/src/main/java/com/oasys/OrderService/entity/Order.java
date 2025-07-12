@@ -52,8 +52,8 @@ public class Order {
         this.productId = productId;
     }
 
-    public void getProductId() {
-        this.productId = productId;
+    public long getProductId() {
+        return productId;
     }
 
     public int getQuantity() {
