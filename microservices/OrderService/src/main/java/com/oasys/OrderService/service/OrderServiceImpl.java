@@ -1,6 +1,8 @@
 package com.oasys.OrderService.service;
 
 import com.oasys.OrderService.entity.Order;
+import com.oasys.OrderService.external.client.PaymentService;
+import com.oasys.OrderService.external.client.model.PaymentRequest;
 import com.oasys.OrderService.model.OrderRequest;
 import com.oasys.OrderService.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private PaymentService paymentService;
+
     @Override
     public Long createOrder(OrderRequest orderRequest) {
 
@@ -40,7 +45,28 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         Order order1 = orderRepository.save(order);
+
         log.info("Order created with ID: {}", order1.getOrderId());
+
+        PaymentRequest paymentRequest = PaymentRequest.builder()
+                .orderId(order1.getOrderId())
+                .amount(orderRequest.getPrice())
+                .paymentMode(orderRequest.getPaymentMode())
+
+                .build();
+
+
+        try {
+            paymentService.processPayment(paymentRequest);
+            log.info("Payment processed successfully for Order ID: {}", order1.getOrderId());
+            order1.setOrderStatus("ORDER_PLACED");
+        }
+        catch (Exception e) {
+            log.error("Payment processing failed for Order ID: {}", order1.getOrderId(), e);
+            order1.setOrderStatus("PAYMENT_FAILED");
+            orderRepository.save(order1);
+            throw new RuntimeException("Payment processing failed, order status updated to PAYMENT_FAILED");
+        }
         return order1.getOrderId();
     }
 

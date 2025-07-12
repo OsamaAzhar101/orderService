@@ -29,7 +29,7 @@ public class Order {
     private long amount;
 
     private Instant orderDate;
-    private double price;
+    private long price;
 
     // Getters and Setters
     public long getOrderId() {
@@ -64,11 +64,11 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public double getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
