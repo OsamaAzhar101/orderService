@@ -22,6 +22,8 @@ public class OrderController {
 
         log.info("Received order request: {}", orderRequest);
 
+//        1 - Save order details in the database with order status as "CREATED"
+
        Long orderId =  orderService.createOrder(orderRequest);
 
        log.info("Order created successfully with ID: {}", orderId);

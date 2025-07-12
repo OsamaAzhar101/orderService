@@ -6,6 +6,7 @@ import com.oasys.OrderService.repository.OrderRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.oasys.OrderService.external.client.ProductService;
 
 import java.time.Instant;
 import java.util.List;
@@ -17,10 +18,18 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private ProductService productService;
+
     @Override
     public Long createOrder(OrderRequest orderRequest) {
-        log.info("Creating order with request: {}", orderRequest);
 
+        log.info("Received order request: {}", orderRequest);
+        productService.reduceQuantity(
+                orderRequest.getProductId(),
+                orderRequest.getQuantity()
+        );
+        log.info("Creating order with request: {}", orderRequest);
         Order order = Order.builder()
                 .productId(orderRequest.getProductId())
                 .quantity(orderRequest.getQuantity())
