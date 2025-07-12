@@ -92,11 +92,13 @@ public class OrderServiceImpl implements OrderService {
         ResponseEntity<ProductResponse> productResponse =
                 productService.getProductById(order.getProductId());
 
-        if (!productResponse.getStatusCode().is2xxSuccessful()) {
+/*
+  if (!productResponse.getStatusCode().is2xxSuccessful()) {
             log.error("Failed to fetch product details for Order ID: {}", orderId);
             throw new CustomException("Failed to fetch product details",
                     "PRODUCT_NOT_FOUND", productResponse.getStatusCode().value());
         }
+        */
 
         return OrderResponse.builder()
                 .orderStatus(order.getOrderStatus())
