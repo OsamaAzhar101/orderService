@@ -1,5 +1,6 @@
 package com.oasys.OrderService.model;
 
+import com.oasys.OrderService.external.client.model.PaymentResponse;
 import com.oasys.OrderService.external.client.model.ProductResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,5 +23,7 @@ public class OrderResponse {
     private String orderStatus;
 
     private ProductResponse productDetails;
+
+    private PaymentResponse paymentDetails;
 
 }

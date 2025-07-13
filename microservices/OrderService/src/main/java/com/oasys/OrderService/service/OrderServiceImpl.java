@@ -4,6 +4,7 @@ import com.oasys.OrderService.entity.Order;
 import com.oasys.OrderService.exception.CustomException;
 import com.oasys.OrderService.external.client.PaymentService;
 import com.oasys.OrderService.external.client.model.PaymentRequest;
+import com.oasys.OrderService.external.client.model.PaymentResponse;
 import com.oasys.OrderService.external.client.model.ProductResponse;
 import com.oasys.OrderService.model.OrderRequest;
 import com.oasys.OrderService.model.OrderResponse;
@@ -92,20 +93,38 @@ public class OrderServiceImpl implements OrderService {
         ResponseEntity<ProductResponse> productResponse =
                 productService.getProductById(order.getProductId());
 
-/*
-  if (!productResponse.getStatusCode().is2xxSuccessful()) {
-            log.error("Failed to fetch product details for Order ID: {}", orderId);
-            throw new CustomException("Failed to fetch product details",
-                    "PRODUCT_NOT_FOUND", productResponse.getStatusCode().value());
-        }
-        */
+        ProductResponse productDetails = ProductResponse.builder()
+                .productName(productResponse.getBody().getProductName())
+                .price(productResponse.getBody().getPrice())
+                .productId(productResponse.getBody().getProductId())
+                .quantity(productResponse.getBody().getQuantity())
+                .build();
+
+        log.info("Product details fetched successfully for Order ID: {}", orderId);
+
+
+        log.info("Getting Payment Response from Payment Service for Order ID: {}", orderId);
+
+        ResponseEntity<PaymentResponse> paymentResponseResponseEntity =
+                paymentService.getPaymentDetailsByOrderId(orderId);
+
+
+        PaymentResponse paymentResponse = PaymentResponse.builder()
+                .paymentDate(paymentResponseResponseEntity.getBody().getPaymentDate())
+                .paymentId(paymentResponseResponseEntity.getBody().getPaymentId())
+                .paymentStatus(paymentResponseResponseEntity.getBody().getPaymentStatus())
+                .amount(paymentResponseResponseEntity.getBody().getAmount())
+                .orderId(paymentResponseResponseEntity.getBody().getOrderId())
+                .paymentMode(paymentResponseResponseEntity.getBody().getPaymentMode())
+                .build();
 
         return OrderResponse.builder()
                 .orderStatus(order.getOrderStatus())
                 .orderDate(order.getOrderDate())
                 .amount(order.getAmount())
                 .orderId(order.getOrderId())
-                .productDetails(productResponse.getBody())
+                .productDetails(productDetails)
+                .paymentDetails(paymentResponse)
                 .build();
 
     }
