@@ -1,10 +1,7 @@
 package com.oasys.OrderService.entity;
 
 import com.oasys.OrderService.model.PaymentMode;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Generated;
@@ -16,9 +13,11 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "order_id")
     private long orderId;
     private String orderStatus;
     private long productId;

@@ -1,9 +1,11 @@
 package com.oasys.OrderService.controller;
 
 import com.oasys.OrderService.entity.Order;
-import com.oasys.OrderService.model.OrderRequest;
-import com.oasys.OrderService.model.OrderResponse;
+
+
 import com.oasys.OrderService.service.OrderService;
+import com.oasys.common_module.clients.external.model.OrderRequest;
+import com.oasys.common_module.clients.external.model.OrderResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

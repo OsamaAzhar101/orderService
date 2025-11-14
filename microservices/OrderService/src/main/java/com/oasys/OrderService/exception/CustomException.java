@@ -1,3 +1,4 @@
+/*
 package com.oasys.OrderService.exception;
 
 import lombok.Builder;
@@ -20,3 +21,4 @@ public class CustomException extends RuntimeException {
 
 
 }
+*/
