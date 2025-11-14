@@ -1,4 +1,4 @@
-package com.oasys.OrderService.model;
+package com.oasys.OrderService.external.client.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,16 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class OrderRequest {
+public class ProductResponse {
 
+    private String productName;
     private long productId;
-    private int quantity;
+    private long quantity;
     private long price;
-
-    private com.oasys.common_module.clients.external.model.PaymentMode paymentMode;
-
-
 }

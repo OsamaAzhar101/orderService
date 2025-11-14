@@ -1,3 +1,4 @@
+/*
 package com.oasys.OrderService.external.client;
 
 import com.oasys.OrderService.external.client.model.PaymentRequest;
@@ -22,3 +23,4 @@ public interface PaymentService {
 
 
 }
+*/

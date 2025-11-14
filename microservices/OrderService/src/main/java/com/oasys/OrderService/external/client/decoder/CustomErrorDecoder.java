@@ -1,3 +1,4 @@
+/*
 package com.oasys.OrderService.external.client.decoder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oasys.OrderService.exception.CustomException;
@@ -40,3 +41,4 @@ public class CustomErrorDecoder implements ErrorDecoder {
 
     }
 }
+*/

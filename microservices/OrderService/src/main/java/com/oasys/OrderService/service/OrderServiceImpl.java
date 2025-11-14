@@ -2,18 +2,21 @@ package com.oasys.OrderService.service;
 
 import com.oasys.OrderService.entity.Order;
 import com.oasys.OrderService.exception.CustomException;
-import com.oasys.OrderService.external.client.PaymentService;
-import com.oasys.OrderService.external.client.model.PaymentRequest;
-import com.oasys.OrderService.external.client.model.PaymentResponse;
-import com.oasys.OrderService.external.client.model.ProductResponse;
-import com.oasys.OrderService.model.OrderRequest;
-import com.oasys.OrderService.model.OrderResponse;
+
+
+import com.oasys.common_module.clients.external.model.OrderRequest;
+import com.oasys.common_module.clients.external.model.OrderResponse;
 import com.oasys.OrderService.repository.OrderRepository;
+import com.oasys.common_module.clients.external.PaymentService;
+import com.oasys.common_module.clients.external.ProductService;
+import com.oasys.common_module.clients.external.model.PaymentRequest;
+import com.oasys.common_module.clients.external.model.PaymentResponse;
+import com.oasys.common_module.clients.external.model.ProductResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.oasys.OrderService.external.client.ProductService;
+
 
 import java.time.Instant;
 import java.util.List;
