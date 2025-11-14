@@ -1,8 +1,9 @@
 package com.oasys.OrderService.service;
 
 import com.oasys.OrderService.entity.Order;
-import com.oasys.OrderService.model.OrderRequest;
-import com.oasys.OrderService.model.OrderResponse;
+import com.oasys.common_module.clients.external.model.OrderRequest;
+import com.oasys.common_module.clients.external.model.OrderResponse;
+
 
 import java.util.List;
 
