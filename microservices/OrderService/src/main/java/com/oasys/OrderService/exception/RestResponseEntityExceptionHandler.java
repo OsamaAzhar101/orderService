@@ -1,3 +1,4 @@
+/*
 package com.oasys.OrderService.exception;
 
 
@@ -19,3 +20,4 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
                     .build(), HttpStatus.NOT_FOUND);
     }
 }
+*/

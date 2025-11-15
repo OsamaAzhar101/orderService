@@ -1,7 +1,7 @@
 package com.oasys.OrderService.service;
 
 import com.oasys.OrderService.entity.Order;
-import com.oasys.OrderService.exception.CustomException;
+
 
 
 import com.oasys.common_module.clients.external.model.OrderRequest;
@@ -12,6 +12,7 @@ import com.oasys.common_module.clients.external.ProductService;
 import com.oasys.common_module.clients.external.model.PaymentRequest;
 import com.oasys.common_module.clients.external.model.PaymentResponse;
 import com.oasys.common_module.clients.external.model.ProductResponse;
+import com.oasys.common_module.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

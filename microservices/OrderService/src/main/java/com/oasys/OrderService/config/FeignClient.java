@@ -1,6 +1,7 @@
+/*
 package com.oasys.OrderService.config;
 
-import com.oasys.OrderService.external.client.decoder.CustomErrorDecoder;
+import com.oasys.common_module.clients.error.CustomErrorDecoder;
 import feign.codec.ErrorDecoder;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
@@ -12,3 +13,4 @@ public class FeignClient {
         return new CustomErrorDecoder();
     }
 }
+*/
